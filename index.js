@@ -21,5 +21,5 @@ app.get('/ofertas', (req, res) => {
 });
 
 app.listen(PORT, () => {
-    console.log(`Servidor escuchando en http://localhost:${PORT}`);
+    console.log(`http://localhost:${PORT}`);
 });
