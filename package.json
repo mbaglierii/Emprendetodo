@@ -15,5 +15,9 @@
     "url": "https://github.com/mbaglierii/Emprendetodo/issues"
   },
   "homepage": "https://github.com/mbaglierii/Emprendetodo#readme",
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^4.21.0"
+  }
 }
