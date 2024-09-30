@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emprendetodo</title>
+    <link rel="stylesheet" href="/estilos/styles.css">
+    <link rel="stylesheet" href="estilos/estilo_ofertas.css">
+    
+</head>
+<body>
+    <nav class="navbar">
+        <ul class="nav-items">
+            <li><a href="/">Home</a></li>
+            <li><a href="#">Contacto</a></li>
+            <li><a href="/ofertas">Ofertas</a></li>
+        </ul>
+        <div class="nav-buttons">
+            <button class="btn login">Login</button>
+            <button class="btn register">Registrarse</button>
+        </div>
+    </nav>
+
+    <main>
+        <h1>Ofertas</h1>
+        
+        <form id="task-form">
+            <input type="text" id="task-input" placeholder="Escribe tu oferta..." required>
+            <button type="submit">Agregar Oferta</button>
+        </form>
+
+        <ul id="task-list"></ul>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="social-media">
+                <a href="https://facebook.com" target="_blank">
+                    <img src="images/facebook-logo.png" alt="Facebook" class="social-icon">
+                </a>
+                <a href="https://twitter.com" target="_blank">
+                    <img src="images/twitter-sign.png" alt="Twitter" class="social-icon">
+                </a>
+                <a href="https://instagram.com" target="_blank">
+                    <img src="images/instagram-symbol.png" alt="Instagram" class="social-icon">
+                </a>
+                <div class="separator_v_chico"></div>
+
+                <div class="footer-contacto">
+                    <p>Teléfono: +54 1142345364</p>
+                    <p>Email: contacto@emprendetodo.com</p>
+                </div>
+            </div>
+
+            <div class="promo-text">
+                <p>Sos emprendedor? Queres publicitar tu emprendimiento en <strong>EMPRENDEDORES.COM</strong>? 
+                    <a href="https://emprendedores.com/publicitar" target="_blank" class="promo-link">HACE CLICK ACÁ</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/scripts/ofertas.js"></script>
+</body>
+</html>
