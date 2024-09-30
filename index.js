@@ -7,7 +7,7 @@ const app = express();
 
 const PORT = process.env.PORT || 3000;
 
-app.use(express.static('public'));
+app.use('/public', express.static(path.join(__dirname, 'public')));
 
 
 app.use(express.json());
@@ -21,5 +21,5 @@ app.get('/ofertas', (req, res) => {
 });
 
 app.listen(PORT, () => {
-    console.log(`Servidor escuchando en http://localhost:${PORT}`);
+    console.log(`http://localhost:${PORT}`);
 });
