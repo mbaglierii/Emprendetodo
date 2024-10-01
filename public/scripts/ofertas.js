@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
         li.appendChild(textSpan);  
 
         if (task.completed) {
-            li.style.textDecoration = 'line-through';
+            textSpan.style.textDecoration = 'line-through';
         }
 
         const completeButton = document.createElement('button');
