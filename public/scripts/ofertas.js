@@ -37,7 +37,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function createTaskElement(task) {
         const li = document.createElement('li');
-        li.textContent = task.text;
+        const textSpan = document.createElement('span');  
+        textSpan.textContent = task.text;
+        li.appendChild(textSpan);  
 
         if (task.completed) {
             li.style.textDecoration = 'line-through';
@@ -51,6 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const taskIndex = tasks.findIndex(t => t.text === task.text);
             if (taskIndex !== -1) {
                 tasks[taskIndex].completed = !tasks[taskIndex].completed;
+                textSpan.style.textDecoration = tasks[taskIndex].completed ? 'line-through' : 'none';  
                 console.log("Oferta completada:", tasks[taskIndex]);
                 updateLocalStorage(tasks);
             }
