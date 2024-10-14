@@ -55,7 +55,7 @@ const update_password = (req, res) => {
             return res.status(500).json({error: "ERROR: Intente más tarde por favor"});
         }
         
-        if (rows.length == 0) {  
+        if (result.length == 0) {  
             return res.status(404).json({error: "ERROR: El usuario a modificar no existe"});
         }
         
