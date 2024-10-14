@@ -20,9 +20,6 @@ app.get('/ofertas', (req, res) => {
     res.sendFile(__dirname + "ofertas.html");
 });
 
-const userRouter = require('./routers/users_router');
-app.use('/users', userRouter);
-
 app.listen(PORT, () => {
     console.log(`http://localhost:${PORT}`);
 });
