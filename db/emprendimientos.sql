@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 14-10-2024 a las 20:36:22
+-- Tiempo de generación: 16-10-2024 a las 19:49:56
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -24,43 +24,43 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `users`
+-- Estructura de tabla para la tabla `emprendimientos`
 --
 
-CREATE TABLE `users` (
-  `pk_user` int(11) NOT NULL,
-  `username` varchar(60) NOT NULL,
-  `password` varchar(60) NOT NULL
+CREATE TABLE `emprendimientos` (
+  `pk_emprendimiento` int(11) NOT NULL,
+  `nombre_emprendimiento` varchar(60) NOT NULL,
+  `fk_categoria` int(11) NOT NULL,
+  `reviews` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `users`
+-- Volcado de datos para la tabla `emprendimientos`
 --
 
-INSERT INTO `users` (`pk_user`, `username`, `password`) VALUES
-(3, 'ads', '123'),
-(4, 'ads', '234234'),
-(5, 'd3342323', 'sdf');
+INSERT INTO `emprendimientos` (`pk_emprendimiento`, `nombre_emprendimiento`, `fk_categoria`, `reviews`) VALUES
+(1, 'Mates', 1, 3),
+(2, 'Tazas', 5, 142);
 
 --
 -- Índices para tablas volcadas
 --
 
 --
--- Indices de la tabla `users`
+-- Indices de la tabla `emprendimientos`
 --
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`pk_user`);
+ALTER TABLE `emprendimientos`
+  ADD PRIMARY KEY (`pk_emprendimiento`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
 --
 
 --
--- AUTO_INCREMENT de la tabla `users`
+-- AUTO_INCREMENT de la tabla `emprendimientos`
 --
-ALTER TABLE `users`
-  MODIFY `pk_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+ALTER TABLE `emprendimientos`
+  MODIFY `pk_emprendimiento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

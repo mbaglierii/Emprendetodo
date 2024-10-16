@@ -23,6 +23,10 @@ app.get('/ofertas', (req, res) => {
 const userRouter = require('./routers/users_router');
 app.use('/users', userRouter);
 
+
+const empreRouter = require('./routers/emprende_router');
+app.use('/emprendimientos', empreRouter);
+
 app.listen(PORT, () => {
     console.log(`http://localhost:${PORT}`);
 });
