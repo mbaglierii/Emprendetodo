@@ -27,6 +27,9 @@ app.use('/users', userRouter);
 const empreRouter = require('./routers/emprende_router');
 app.use('/emprendimientos', empreRouter);
 
+const catRouter = require('./routers/categoria_router');
+app.use('/categorias', catRouter);
+
 app.listen(PORT, () => {
     console.log(`http://localhost:${PORT}`);
 });
