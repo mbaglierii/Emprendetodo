@@ -1,16 +1,7 @@
 const db = require("../db/db");
 const { all } = require("../routers/users_router");
 
-const all_users = (req, res) => {
-    const sql = "SELECT * FROM users"
-    db.query(sql,[username, password], (error, rows) => {
-        console.log(rows);
-        if(error){
-            return res.status(500).json({error : "ERROR: Intente mas tarde por favor"});
-        }
-        res.json(rows[0]); 
-    }); 
-}
+
 
 const find_user = (req, res) => {
     const {username, password} = req.query;
@@ -24,21 +15,21 @@ const find_user = (req, res) => {
         if(rows.length == 0){
             return res.status(404).send({error : "ERROR: No existe el usuario buscado"});
         };
-        res.json(rows[0]); 
+        res.json(rows); 
     }); 
 }
 
 
 const create_user = (req, res) => {
-    const {username, password} = req.query;
+    const {username, password, fk_provincia, fk_localidad} = req.query;
     console.log(username, password)
-    const sql = "INSERT INTO `users`( `username`, `password`) VALUES (?,?)"
-    db.query(sql,[username, password], (error, rows) => {
+    const sql = "INSERT INTO `users`( `username`, `password`, fk_provincia, fk_localidad) VALUES (?,?,?,?)"
+    db.query(sql,[username, password, fk_provincia, fk_localidad], (error, rows) => {
         console.log(rows);
         if(error){
             return res.status(500).json({error : "ERROR: Intente mas tarde por favor"});
         }
-        const user = {...req.body, username, password}; 
+        const user = {...req.body, username, password, fk_localidad, fk_provincia}; 
         res.status(201).json(user);
     }); 
 }
@@ -85,6 +76,5 @@ module.exports = {
     find_user,
     delete_user,
     update_password,
-    create_user,
-    all_users
+    create_user
 };

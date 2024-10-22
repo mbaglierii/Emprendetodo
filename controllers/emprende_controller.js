@@ -1,5 +1,5 @@
 const db = require("../db/db");
-const { all } = require("../routers/emprende_router");
+const { all } = require("../routers/localidades_router");
 
 const all_emprendimientos = (req, res) => {
     const sql = "SELECT * FROM emprendimientos"
@@ -29,23 +29,23 @@ const find_emprendimientos = (req, res) => {
 
 
 const create_emprendimiento = (req, res) => {
-    const {nombre_emprendimiento, fk_categoria} = req.query;
-    const sql = "INSERT INTO `emprendimientos`(`nombre_emprendimiento`, `fk_categoria`, `reviews`) VALUES (?,?,?)"
-    db.query(sql,[nombre_emprendimiento, fk_categoria, 0], (error, rows) => {
+    const {nombre_emprendimiento, fk_user} = req.query;
+    const sql = "INSERT INTO `emprendimientos`(`nombre_emprendimiento`, `reviews`, fk_user) VALUES (?,?,?)"
+    db.query(sql,[nombre_emprendimiento, 0, fk_user], (error, rows) => {
         console.log(rows);
         if(error){
             return res.status(500).json({error : "ERROR: Intente mas tarde por favor"});
         }
-        const user = {...req.body, nombre_emprendimiento, fk_categoria}; 
+        const user = {...req.body, nombre_emprendimiento, fk_user}; 
         res.status(201).json(user);
     }); 
 }
 
 
 const update_emprendemiento = (req, res) => {
-    const {nombre_emprendimiento, fk_categoria, reviews, pk_emprendimiento} = req.query;
-    const sql = "UPDATE `emprendimientos` SET `nombre_emprendimiento`=?,`fk_categoria`=?,`reviews`=? WHERE pk_emprendemiento = ?";
-    db.query(sql, [nombre_emprendimiento, fk_categoria, reviews, pk_emprendimiento], (error, result) => {  
+    const {nombre_emprendimiento, reviews, pk_emprendimiento} = req.query;
+    const sql = "UPDATE `emprendimientos` SET `nombre_emprendimiento`=?,,`reviews`=? WHERE pk_emprendemiento = ?";
+    db.query(sql, [nombre_emprendimiento, reviews, pk_emprendimiento], (error, result) => {  
         if (error) {
             return res.status(500).json({error: "ERROR: Intente más tarde por favor"});
         }
@@ -54,7 +54,7 @@ const update_emprendemiento = (req, res) => {
             return res.status(404).json({error: "ERROR: El emprendimiento a modificar no existe"});
         }
         
-        const user = {...req.body, pk_emprendimiento,nombre_emprendimiento, fk_categoria, reviews};  
+        const user = {...req.body, pk_emprendimiento,nombre_emprendimiento, reviews};  
         res.status(201).json(user);
     });
 };
