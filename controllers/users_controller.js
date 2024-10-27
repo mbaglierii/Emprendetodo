@@ -1,7 +1,18 @@
 const db = require("../db/db");
 const { all } = require("../routers/users_router");
 
-
+const all_users = (req, res) => {
+    const sql = "SELECT pk_user, username, fk_provincia, fk_localidad FROM users"
+    db.query(sql, (error, rows) => {
+        if(error){
+            return res.status(500).json({error : "ERROR: Intente mas tarde por favor"});
+        }
+        if(rows.length == 0){
+            return res.status(404).send({error : "ERROR: No existe el usuario buscado"});
+        };
+        res.json(rows); 
+    }); 
+}
 
 const find_user = (req, res) => {
     const {username, password} = req.query;
@@ -76,5 +87,6 @@ module.exports = {
     find_user,
     delete_user,
     update_password,
-    create_user
+    create_user,
+    all_users
 };
