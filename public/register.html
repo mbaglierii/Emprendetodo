@@ -25,7 +25,7 @@
         <main>
             <section class="registration-form">
                 <h2>Registro</h2>
-                <form action="/register" method="POST" enctype="multipart/form-data">
+                <form id="registerForm" enctype="multipart/form-data">
                     <label for="username">Nombre de usuario:</label>
                     <input type="text" id="username" name="username" required>
         
@@ -39,28 +39,24 @@
                     <input type="password" id="confirm-password" name="confirm-password" required>
         
                     <label for="province">Provincia:</label>
-                    <select id="province" name="province" required>
+                    <select id="province" name="fk_provincia" required>
                         <option value="">Selecciona tu provincia</option>
-                        <option value="buenos-aires">Buenos Aires</option>
-                        <option value="cordoba">Córdoba</option>
-                        <option value="santa-fe">Santa Fe</option>
-                        <option value="mendoza">Mendoza</option>
                     </select>
         
                     <label for="city">Localidad:</label>
-                    <select id="city" name="city" required>
+                    <select id="city" name="fk_localidad" required>
                         <option value="">Selecciona tu localidad</option>
                     </select>
                     
                     <label>Género:</label>
                     <div class="gender-options">
-                        <label><input type="radio" name="gender" value="masculino" required> Masculino</label>
-                        <label><input type="radio" name="gender" value="femenino"> Femenino</label>
-                        <label><input type="radio" name="gender" value="otro"> Otro</label>
+                        <label><input type="radio" name="fk_genero" value="1" required> Masculino</label>
+                        <label><input type="radio" name="fk_genero" value="2"> Femenino</label>
+                        <label><input type="radio" name="fk_genero" value="3"> Otro</label>
                     </div>
 
                     <label for="profile-pic">Selecciona una imagen de perfil:</label>
-                    <input type="file" id="profile-pic" name="profile-pic" accept="image/*">
+                    <input type="file" id="profile-pic" name="imagen" accept="image/*">
         
                     <button type="submit" class="btn register-submit">Registrarse</button>
                 </form>
@@ -101,6 +97,7 @@
         
 
     </main>
+    <script src="scripts/registracion.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

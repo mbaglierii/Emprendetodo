@@ -4,7 +4,6 @@ const { all } = require("../routers/provincias_router");
 const all_provincias = (req, res) => {
     const sql = "SELECT * FROM provincias"
     db.query(sql, (error, rows) => {
-        console.log(rows);
         if(error){
             return res.status(500).json({error : "ERROR: Intente mas tarde por favor"});
         }
