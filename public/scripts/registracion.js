@@ -59,7 +59,7 @@ document.getElementById("province").addEventListener("change", async function() 
 
         cities.forEach(city => {
             const option = document.createElement("option");
-            option.value = city.id;
+            option.value = city.pk_localidades;
             option.textContent = city.nombre_localidad;
             citySelect.appendChild(option);
         });

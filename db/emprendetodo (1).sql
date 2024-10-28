@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 22-10-2024 a las 21:19:43
+-- Tiempo de generación: 27-10-2024 a las 16:03:31
 -- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.2.12
+-- Versión de PHP: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -129,18 +129,19 @@ CREATE TABLE `users` (
   `pk_user` int(11) NOT NULL,
   `username` varchar(60) NOT NULL,
   `password` varchar(60) NOT NULL,
+  `email` varchar(60) NOT NULL,
   `fk_provincia` int(11) NOT NULL,
-  `fk_localidad` int(11) NOT NULL
+  `fk_localidad` int(11) NOT NULL,
+  `fk_genero` int(11) NOT NULL,
+  `imagen_dir` varchar(60) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `users`
 --
 
-INSERT INTO `users` (`pk_user`, `username`, `password`, `fk_provincia`, `fk_localidad`) VALUES
-(3, 'ads', '123', 0, 0),
-(4, 'ads', '234234', 0, 0),
-(5, 'marco', 'contra123', 0, 0);
+INSERT INTO `users` (`pk_user`, `username`, `password`, `email`, `fk_provincia`, `fk_localidad`, `fk_genero`, `imagen_dir`) VALUES
+(7, 'marco144545', '$2b$10$Vg.F6Kh4NCahwJGD3REGDePZSAIVffgobkp67e8ZzWYZMf41MwHPe', 'marco.baglieri1@gmail.com', 2, 1, 1, '1730041378111.jpeg');
 
 --
 -- Índices para tablas volcadas
@@ -220,7 +221,7 @@ ALTER TABLE `publicaciones`
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `pk_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `pk_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

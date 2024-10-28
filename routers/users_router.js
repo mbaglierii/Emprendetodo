@@ -8,7 +8,7 @@ const upload = require('../uploadConfig');
 
 router.get('/', controller.all_users)
 
-router.get('/login', controller.find_user)
+router.post('/login', controller.find_user)
 
 router.post('/create', upload.single('imagen'), controller.create_user)
 

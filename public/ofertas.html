@@ -15,9 +15,14 @@
             <li><a href="#">Contacto</a></li>
             <li><a href="ofertas.html">Ofertas</a></li>
         </ul>
-        <div class="nav-buttons">
-            <button class="btn login">Login</button>
-            <button class="btn register">Registrarse</button>
+        <div class="nav-buttons" id="navButtons">
+            <button class="btn login"><a href="login.html">Iniciar sesion</a></button>
+            <button class="btn register"><a href="register.html">Registrarse</a></button>
+        </div>
+        <div id="user-info" class="user-info hidden">
+            <span class="greeting">Hola,</span>
+            <img src="" alt="Foto de Perfil" class="profile-pic">
+            <button class="btn logout">Cerrar sesión</button>
         </div>
     </nav>
 
@@ -61,5 +66,7 @@
     </footer>
 
     <script src="/scripts/ofertas.js"></script>
+    <script src="scripts/nav_handler.js"></script>
+
 </body>
 </html>

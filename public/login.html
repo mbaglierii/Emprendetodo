@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emprendetodo</title>
+    <link rel="stylesheet" href="/estilos/styles.css">
+    <link rel="stylesheet" href="/estilos/login.css">
+
+</head>
+<body>
+    <nav class="navbar">
+        <ul class="nav-items">
+            <li><a href="/">Home</a></li>
+            <li><a href="#">Contacto</a></li>
+            <li><a href="ofertas.html">Ofertas</a></li>
+        </ul>
+        <div class="nav-buttons" id="navButtons">
+            <button class="btn login"><a href="login.html">Iniciar sesion</a></button>
+            <button class="btn register"><a href="register.html">Registrarse</a></button>
+        </div>
+        <div id="user-info" class="user-info hidden">
+            <span class="greeting">Hola,</span>
+            <img src="" alt="Foto de Perfil" class="profile-pic">
+            <button class="btn logout">Cerrar sesión</button>
+        </div>
+    </nav>
+    <main>
+        
+        <main>
+            <section class="login-container">
+                <h2>Iniciar Sesión</h2>
+                <form id="loginForm" class="login-form">
+                    <div class="form-group">
+                        <label for="username">Nombre de Usuario</label>
+                        <input type="text" id="username" name="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Contraseña</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                    <button type="submit" class="btn submit">Ingresar</button>
+                </form>
+            </section>  
+        </main>
+        
+
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="social-media">
+                    <a href="https://facebook.com" target="_blank">
+                        <img src="images/facebook-logo.png" alt="Facebook" class="social-icon">
+                    </a>
+                    <a href="https://twitter.com" target="_blank">
+                        <img src="images/twitter-sign.png" alt="Twitter" class="social-icon">
+                    </a>
+                    <a href="https://instagram.com" target="_blank">
+                        <img src="images/instagram-symbol.png" alt="Instagram" class="social-icon">
+                    </a>
+                    <div class="separator_v_chico"></div>
+
+                    <div class="footer-contacto">
+                        <p>Teléfono: +54 1142345364</p>
+                        <p>Email: contacto@emprendetodo.com</p>
+                    </div>
+
+
+                </div>
+        
+                <div class="promo-text">
+                    <p>Sos emprendedor? Queres publicitar tu emprendimiento en <strong>EMPRENDEDORES.COM</strong>? 
+                        <a href="https://emprendedores.com/publicitar" target="_blank" class="promo-link">HACE CLICK ACÁ</a>
+                    </p>
+                </div>
+            </div>
+        </footer>
+        
+        
+
+    </main>
+    <script src="script.js"></script>
+    <script src="scripts/login.js"></script>
+    <script src="scripts/nav_handler.js"></script>
+
+</body>
+</html>

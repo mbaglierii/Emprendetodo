@@ -1,6 +1,6 @@
 const db = require("../db/db");
 const { all } = require("../routers/users_router");
-
+const jwt = require("jsonwebtoken");
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
@@ -24,8 +24,8 @@ const all_users = (req, res) => {
 }
 
 const find_user = async (req, res) => {
-    const {username, password} = req.query;
-    console.log(username)
+    const {username, password} = req.body;
+    console.log(username, password)
     
     const sql = "SELECT * FROM users WHERE username = ?"
     db.query(sql,[username], async (error, rows) => {
@@ -46,8 +46,12 @@ const find_user = async (req, res) => {
         const match = await bcrypt.compare(password, password_encriptada);
 
         if(match){
-            res.json(user);
-        }else{
+            const token = jwt.sign({ userId: user.id }, process.env.S_KEY, { expiresIn: "1h" });
+            res.json({
+                user: user,
+                token: token
+            });
+            }else{
             return res.status(400).json({ error: "Contraseña incorrecta" });
         }
         
@@ -56,7 +60,7 @@ const find_user = async (req, res) => {
 
 
 const create_user = async (req, res) => {
-    var pfp = 'default.pfp.png'
+    var pfp = 'default_pfp.png'
     if(req.file){
         pfp = req.file.filename
     }
