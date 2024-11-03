@@ -32,8 +32,10 @@ document.getElementById("loginForm").addEventListener("submit", async function(e
 
         const expires = new Date(Date.now() + 3600e3).toUTCString();
         document.cookie = `token=${data.token}; expires=${expires}; path=/`;
-        document.cookie = `token_admin=${data.token_admin}; expires=${expires}; path=/`;
-        
+        if (data.token_admin != undefined){
+            document.cookie = `token_admin=${data.token_admin}; expires=${expires}; path=/`;
+
+        }
         window.location.href = "/"; 
     } else if (response.status === 404) {
         const error = await response.json();

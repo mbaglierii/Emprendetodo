@@ -216,6 +216,16 @@ html, body {
     transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
 }
 
+.btn.hidden{
+    display: none;
+}
+
+.btn a{
+    text-decoration: none;
+    color: #ff3333;
+}
+
+
 .btn.login {
     color: #4CAF50;
     border-color: #4CAF50;

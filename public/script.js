@@ -13,10 +13,20 @@ document.addEventListener("DOMContentLoaded", function () {
         document.cookie = "token_admin=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 
         document.getElementById('user-info').classList.add('hidden');
-        
+        document.getElementById('PAdmin').style.display = "none";
         document.getElementById('navButtons').style.display = "flex";
         window.location.href = '/';
     });
+
+    const cookies = document.cookie.split('; ');
+    for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].split('=');
+        if (cookie[0] === 'token_admin') {
+            document.getElementById('PAdmin').style.display = "block";
+        }
+    }
+
+
 });
 
 

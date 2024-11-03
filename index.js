@@ -17,12 +17,12 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-app.get('/ofertas', auth,(req, res) => {
-    res.sendFile(__dirname + "/public/ofertas.html");
+app.get('/ofertas', auth.verify_user,(req, res) => {
+    res.sendFile(__dirname + "/private/ofertas.html");
 });
 
-app.get("/protected", auth, (req, res) => {
-    res.status(200).send(`Hola Usuario`);
+app.get('/admins', auth.verify_admin,(req, res) => {
+    res.sendFile(__dirname + "/private/admins.html");
 });
 
 const userRouter = require('./routers/users_router');

@@ -92,8 +92,8 @@ const create_user = async (req, res) => {
         const password_encriptada = await encryptPassword(password);
         console.log(username, password);
 
-        const sql = "INSERT INTO `users`(`username`, `password`, `fk_provincia`, `fk_localidad`, `fk_genero`, `imagen_dir`, email) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        db.query(sql, [username, password_encriptada, fk_provincia, fk_localidad, fk_genero, pfp, email], (error, rows) => {
+        const sql = "INSERT INTO `users`(`username`, `password`, `fk_provincia`, `fk_localidad`, `fk_genero`, `imagen_dir`, email, admin) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        db.query(sql, [username, password_encriptada, fk_provincia, fk_localidad, fk_genero, pfp, email, 0], (error, rows) => {
             if (error) {
                 return res.status(500).json({ error: "ERROR: Intente más tarde por favor" });
             }
