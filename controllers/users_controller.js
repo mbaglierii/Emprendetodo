@@ -47,10 +47,20 @@ const find_user = async (req, res) => {
 
         if(match){
             const token = jwt.sign({ userId: user.id }, process.env.S_KEY, { expiresIn: "1h" });
-            res.json({
-                user: user,
-                token: token
-            });
+            if(user.admin == 1){
+                console.log("Ingreso un admin");
+                const token_admin = jwt.sign({ userId: user.id }, process.env.S_KEY_ADMIN, { expiresIn: "1h" });    
+                res.json({
+                    user: user,
+                    token: token,
+                    token_admin: token_admin
+                });
+            }else{
+                res.json({
+                    user: user,
+                    token: token
+                });
+            }
             }else{
             return res.status(400).json({ error: "Contraseña incorrecta" });
         }

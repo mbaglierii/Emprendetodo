@@ -1,43 +1,31 @@
-
 document.addEventListener("DOMContentLoaded", function () {
+
     const logoutButton = document.querySelector(".logout");
-    
-    logoutButton.addEventListener("click", function () {
-        localStorage.removeItem("userInfo"); 
-        localStorage.removeItem("isLoggedIn"); 
-        localStorage.removeItem("token");  
-        window.location.reload(); 
+
+    logoutButton.addEventListener("click", function (event) {
+        event.preventDefault();
+        
+        localStorage.removeItem("userInfo");
+        
+        localStorage.removeItem("isLoggedIn");
+        
+        document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        document.cookie = "token_admin=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+
+        document.getElementById('user-info').classList.add('hidden');
+        
+        document.getElementById('navButtons').style.display = "flex";
+        window.location.href = '/';
     });
 });
 
-document.getElementById('ofertasLink').addEventListener('click', function (event) {
-    event.preventDefault(); 
-
-    fetch('/ofertas', {
-        method: 'GET', 
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem("token")}`
-        },
-        })
-    .then(response => {
-        if (response.ok) {
-            window.location.href = '/ofertas'; 
-        } else {
-            console.error('Error al enviar los datos');
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
-});
 
 
 const categorias = document.querySelector('.categorias');
+console.log("Elemento 'categorias' seleccionado:", categorias);
+
 let scrollSpeed = 1;
 let intervalId;
-
-
 
 function scrollCategorias() {
     categorias.scrollLeft += scrollSpeed;

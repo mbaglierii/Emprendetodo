@@ -1,18 +1,26 @@
 const jwt = require("jsonwebtoken");
 
-const verifyToken = (req, res, next) => {
-    const token = req.headers.authorization?.split(" ")[1];
-    console.log("Token recibido en verifyToken:", token); 
-    if (!token) return res.redirect('/');
 
-    jwt.verify(token, process.env.S_KEY, (err, decoded) => {
-        if (err) return res.redirect('/');
-        req.userId = decoded.userId;
-        console.log('Token válido, pasando al siguiente middleware...');
-        next();
-    });
+
+
+
+module.exports = (req, res, next) => {
+    const authHeader = req.headers["cookie"];
+    if(!authHeader)
+        return res.redirect('/');
+    
+    const token = authHeader.split('; ').find(cookie => cookie.startsWith('token='));
+    if (token) {
+        const actualToken = token.split('=')[1];
+        jwt.verify(actualToken, process.env.S_KEY, (error, decoded) => {
+            if(error)
+                return res.redirect('/');
+            req.userId = decoded.id;
+            next();
+        });
+    }
+    else{
+        return res.redirect('/');
+
+    };  
 };
-
-module.exports = {
-    verifyToken
-}

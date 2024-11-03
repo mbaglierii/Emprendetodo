@@ -26,9 +26,14 @@ document.getElementById("loginForm").addEventListener("submit", async function(e
         const data = await response.json();
         console.log(data);
         alert("¡Inicio de sesión exitoso! Bienvenido, " + data.user.username);
+        
         localStorage.setItem("userInfo", JSON.stringify(data.user));
-        localStorage.setItem("token", data.token);
         localStorage.setItem("isLoggedIn", true);
+
+        const expires = new Date(Date.now() + 3600e3).toUTCString();
+        document.cookie = `token=${data.token}; expires=${expires}; path=/`;
+        document.cookie = `token_admin=${data.token_admin}; expires=${expires}; path=/`;
+        
         window.location.href = "/"; 
     } else if (response.status === 404) {
         const error = await response.json();
