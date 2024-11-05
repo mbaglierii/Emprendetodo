@@ -17,13 +17,21 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById('navButtons').style.display = "flex";
         window.location.href = '/';
     });
-
+    var token_valido = false;
     const cookies = document.cookie.split('; ');
     for (let i = 0; i < cookies.length; i++) {
         const cookie = cookies[i].split('=');
         if (cookie[0] === 'token_admin') {
             document.getElementById('PAdmin').style.display = "block";
+        };
+        if (cookie[0] === 'token'){
+            token_valido = true;
         }
+    }
+
+    if (token_valido === false){
+        localStorage.removeItem('isLoggedIn');
+        localStorage.removeItem('userInfo');
     }
 
 

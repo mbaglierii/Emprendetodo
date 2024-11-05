@@ -4,7 +4,6 @@ const { all } = require("../routers/users_router");
 const all_cats = (req, res) => {
     const sql = "SELECT * FROM categorias"
     db.query(sql, (error, rows) => {
-        console.log(rows);
         if(error){
             return res.status(500).json({error : "ERROR: Intente mas tarde por favor"});
         }

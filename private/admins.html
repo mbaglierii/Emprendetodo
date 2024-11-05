@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="estilos/admins.css">
     
 </head>
-<body>
+<body>    
     <nav class="navbar">
         <ul class="nav-items">
             <li><a href="/">Home</a></li>
@@ -28,8 +28,17 @@
     </nav>
 
     <main>
+        <div id="dynamicDialog" class="dialog-box" style="display: none;">
+            <h2 id="dialogTitle">Título del Diálogo</h2>
+            <div id="dialogContent">
+            </div>
+            <button onclick="closeDialog()">Cerrar</button>
+            <button id="confirmButton" onclick="confirmAction()" style="margin-left: 10px;">Confirmar</button>
+        </div>
+        
+
         <div class="tabs">
-            <div class="tab active" data-tab="tab1">Categorias</div>
+            <div class="tab active" data-tab="tab_categorias">Categorias</div>
             <div class="tab" data-tab="tab2">Emprendimientos</div>
             <div class="tab" data-tab="tab3">Generos</div>
             <div class="tab" data-tab="tab4">Localidades</div>
@@ -38,7 +47,22 @@
             <div class="tab" data-tab="tab7">Usuarios</div>
         </div>
     
-        <div class="tab-content active" id="tab1">Contenido de la Pestaña 1</div>
+        <div class="tab-content active" id="tab_categorias">
+            <button class="add-button">Agregar Categoría</button>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre Categoria</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="category-table-body">
+                </tbody>
+            </table>
+            
+        </div>
+    
         <div class="tab-content" id="tab2">Contenido de la Pestaña 2</div>
         <div class="tab-content" id="tab3">Contenido de la Pestaña 3</div>
         <div class="tab-content" id="tab4">Contenido de la Pestaña 4</div>
@@ -46,6 +70,7 @@
         <div class="tab-content" id="tab6">Contenido de la Pestaña 6</div>
         <div class="tab-content" id="tab7">Contenido de la Pestaña 7</div>
     </main>
+    
 
     <footer class="footer">
         <div class="footer-content">
@@ -75,6 +100,7 @@
         </div>
     </footer>
     <script src="script.js"></script>
+    <script src="scripts/admins_script/categorias.js"></script>
     <script src="scripts/nav_handler.js"></script>
     <script src="admins.js"></script>
 </body>
