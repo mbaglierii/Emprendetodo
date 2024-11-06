@@ -11,7 +11,7 @@ async function encryptPassword(password) {
 
 
 const all_users = (req, res) => {
-    const sql = "SELECT pk_user, username, fk_provincia, fk_localidad FROM users"
+    const sql = "SELECT * FROM users"
     db.query(sql, (error, rows) => {
         if(error){
             return res.status(500).json({error : "ERROR: Intente mas tarde por favor"});
@@ -104,24 +104,43 @@ const create_user = async (req, res) => {
 }
 
 
-const update_password = (req, res) => {
-    const {id_user} = req.query;
-    const {password} = req.query;
-    const sql = "UPDATE `users` SET `password`=? WHERE pk_user = ?";
+const update_user = async (req, res) => {
+    const {username, password, email, fk_provincia, fk_localidad, fk_genero, imagen_dir, admin, pk_user} = req.query;
+    var sql = "UPDATE `users` SET `username`=?,`password`=?,`email`=?,`fk_provincia`=?,`fk_localidad`=?,`fk_genero`=?,`imagen_dir`=?,`admin`= ? WHERE pk_user = ?";
+    if(password === ""){
+        sql = "UPDATE `users` SET `username`=?,`email`=?,`fk_provincia`=?,`fk_localidad`=?,`fk_genero`=?,`imagen_dir`=?,`admin`= ? WHERE pk_user = ?";
+        db.query(sql, [username, email, fk_provincia, fk_localidad, fk_genero, imagen_dir, admin, pk_user], (error, result) => {  
+            if (error) {
+                return res.status(500).json({error: "ERROR: Intente más tarde por favor"});
+            }
+            
+            if (result.length == 0) {  
+                return res.status(404).json({error: "ERROR: El usuario a modificar no existe"});
+            }
+            
+            const user = {...req.body, pk_user, username, password, email, fk_provincia, fk_localidad, fk_genero, imagen_dir, admin};  
+            res.status(201).json(user);
+        });
+    }else{
+        console.log(password);
+        const password_encriptada = await encryptPassword(password);
+        console.log(password_encriptada);
+        db.query(sql, [username, password_encriptada, email, fk_provincia, fk_localidad, fk_genero, imagen_dir, admin, pk_user], (error, result) => {  
+            if (error) {
+                console.log(error);
+                return res.status(500).json({error: "ERROR: Intente más tarde por favor"});
+            }
+            
+            if (result.length == 0) {  
+                return res.status(404).json({error: "ERROR: El usuario a modificar no existe"});
+            }
+            
+            const user = {...req.body, pk_user, username, password, email, fk_provincia, fk_localidad, fk_genero, imagen_dir, admin};  
+            res.status(201).json(user);
+        });
+    }
     
-    db.query(sql, [password, id_user], (error, result) => {  
-        console.log('ID del usuario:', id_user); 
-        if (error) {
-            return res.status(500).json({error: "ERROR: Intente más tarde por favor"});
-        }
-        
-        if (result.length == 0) {  
-            return res.status(404).json({error: "ERROR: El usuario a modificar no existe"});
-        }
-        
-        const user = {...req.body, id_user, password};  
-        res.status(201).json(user);
-    });
+    
 };
 
 
@@ -144,7 +163,7 @@ const delete_user = (req, res) => {
 module.exports = {
     find_user,
     delete_user,
-    update_password,
+    update_user,
     create_user,
     all_users
 };

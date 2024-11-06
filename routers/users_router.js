@@ -12,7 +12,7 @@ router.post('/login', controller.find_user)
 
 router.post('/create', upload.single('imagen'), controller.create_user)
 
-router.put('/modificar_contra', controller.update_password);
+router.put('/modificar_usuario', controller.update_user);
 
 router.delete('/eliminar', controller.delete_user);
 

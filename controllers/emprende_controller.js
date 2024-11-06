@@ -4,7 +4,7 @@ const { all } = require("../routers/localidades_router");
 const all_emprendimientos = (req, res) => {
     const sql = "SELECT * FROM emprendimientos"
     db.query(sql, (error, rows) => {
-        console.log(rows);
+        
         if(error){
             return res.status(500).json({error : "ERROR: Intente mas tarde por favor"});
         }
@@ -16,42 +16,37 @@ const find_emprendimientos = (req, res) => {
     const {emprendimiento} = req.query;
     const sql = "SELECT * FROM emprendimientos WHERE nombre_emprendimiento = ?"
     db.query(sql,[emprendimiento], (error, rows) => {
-        console.log(rows);
         if(error){
             return res.status(500).json({error : "ERROR: Intente mas tarde por favor"});
         }
         if(rows.length == 0){
             return res.status(404).send({error : "ERROR: No existe el emprendimiento buscado"});
         };
-        res.json(rows[0]); 
-    }); 
+        res.json(rows[0]);
+    });
 }
 
 
 const create_emprendimiento = (req, res) => {
-    const {nombre_emprendimiento, fk_user} = req.query;
-    const sql = "INSERT INTO `emprendimientos`(`nombre_emprendimiento`, `reviews`, fk_user) VALUES (?,?,?)"
-    db.query(sql,[nombre_emprendimiento, 0, fk_user], (error, rows) => {
-        console.log(rows);
+    const {nombre_emprendimiento, fecha_creacion, reviews, fk_user, fk_localidad} = req.query;
+    const sql = "INSERT INTO `emprendimientos`(`nombre_emprendimiento`, `fecha_creacion`, `reviews`, `fk_user`, `fk_localidad`) VALUES (?,?,?,?,?)"
+    db.query(sql,[nombre_emprendimiento, fecha_creacion, reviews, fk_user, fk_localidad], (error, rows) => {
         if(error){
             return res.status(500).json({error : "ERROR: Intente mas tarde por favor"});
         }
-        const user = {...req.body, nombre_emprendimiento, fk_user}; 
+        const user = {...req.body, nombre_emprendimiento, fecha_creacion, reviews, fk_user, fk_localidad}; 
         res.status(201).json(user);
     }); 
 }
 
 
 const update_emprendemiento = (req, res) => {
-    const {nombre_emprendimiento, reviews, pk_emprendimiento} = req.query;
-    const sql = "UPDATE `emprendimientos` SET `nombre_emprendimiento`=?,,`reviews`=? WHERE pk_emprendemiento = ?";
-    db.query(sql, [nombre_emprendimiento, reviews, pk_emprendimiento], (error, result) => {  
+    const {nombre_emprendimiento,fecha_creacion,  reviews, fk_user, fk_localidad, pk_emprendimiento} = req.query;
+    const sql = "UPDATE `emprendimientos` SET `nombre_emprendimiento`=?,`fecha_creacion`=?,`reviews`=?,`fk_user`=?,`fk_localidad`= ? WHERE pk_emprendimiento = ?";
+    db.query(sql, [nombre_emprendimiento,fecha_creacion,  reviews, fk_user, fk_localidad, pk_emprendimiento], (error, result) => {  
         if (error) {
+            console.log(error);
             return res.status(500).json({error: "ERROR: Intente más tarde por favor"});
-        }
-        
-        if (result.length == 0) {  
-            return res.status(404).json({error: "ERROR: El emprendimiento a modificar no existe"});
         }
         
         const user = {...req.body, pk_emprendimiento,nombre_emprendimiento, reviews};  
@@ -62,9 +57,8 @@ const update_emprendemiento = (req, res) => {
 
 const delete_emprendimiento = (req, res) => {
     const {id_emprendimiento} = req.query;
-    const sql = "DELETE FROM `emprendimiento` WHERE pk_emprendimiento = ?"
+    const sql = "DELETE FROM `emprendimientos` WHERE pk_emprendimiento = ?"
     db.query(sql,[id_emprendimiento], (error, rows) => {
-        console.log(id_user);
         if(error){
             return res.status(500).json({error : "ERROR: Intente mas tarde por favor"});
         }

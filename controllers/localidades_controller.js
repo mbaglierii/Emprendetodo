@@ -41,10 +41,8 @@ const create_localidad = (req, res) => {
 
 
 const update_localidad = (req, res) => {
-    const {id_localidad} = req.query;
-    const {nombre_localidad, fk_provincia} = req.query;
+    const {id_localidad, nombre_localidad, fk_provincia} = req.query;
     const sql = "UPDATE `localidades` SET `nombre_localidad`=?, fk_provincia = ? WHERE pk_localidades = ?";
-    
     db.query(sql, [nombre_localidad, fk_provincia, id_localidad], (error, result) => {  
         if (error) {
             return res.status(500).json({error: "ERROR: Intente más tarde por favor"});

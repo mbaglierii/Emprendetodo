@@ -1,6 +1,6 @@
 let currentFields = [];
 
-function openDialog(title, fields, confirmCallback) {
+export function openDialog(id_modificar,title, fields, confirmCallback) {
     const dialogTitle = document.getElementById("dialogTitle");
     const dialogContent = document.getElementById("dialogContent");
 
@@ -24,21 +24,22 @@ function openDialog(title, fields, confirmCallback) {
     const confirmButton = document.createElement("button");
     confirmButton.textContent = "Confirmar";
     confirmButton.onclick = () => {
-        confirmCallback(currentFields.map(input => input.value)); 
+        confirmCallback(id_modificar, currentFields.map( input => input.value)); 
         closeDialog(); 
     };
     dialogContent.appendChild(confirmButton);
 
+    const closeButton = document.createElement("button");
+    closeButton.textContent = "Cerrar";
+    closeButton.style.marginLeft = "5px";
+    closeButton.onclick = () => {
+        closeDialog();
+    };
+    dialogContent.appendChild(closeButton);
+
     document.getElementById("dynamicDialog").style.display = "block";
 }
 
-
-function closeDialog() {
+export function closeDialog() {
     document.getElementById("dynamicDialog").style.display = "none";
-}
-
-
-module.exports = {
-    closeDialog,
-    openDialog
 }

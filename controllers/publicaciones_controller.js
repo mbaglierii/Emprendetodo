@@ -1,10 +1,9 @@
 const db = require("../db/db");
 const { all } = require("../routers/publicaciones_router");
 
-const rand_publis = (req, res) => {
-    const sql = "SELECT * FROM publicaciones ORDER BY RAND() LIMIT 20;"
+const all_publis = (req, res) => {
+    const sql = "SELECT * FROM publicaciones;"
     db.query(sql, (error, rows) => {
-        console.log(rows);
         if(error){
             return res.status(500).json({error : "ERROR: Intente mas tarde por favor"});
         }
@@ -30,9 +29,9 @@ const find_publis = (req, res) => {
 
 
 const create_public = (req, res) => {
-    const {nombre_publicacion, fk_emprendimiento, fk_categoria} = req.query;
-    const sql = "INSERT INTO `publicaciones`(`nombre_publicacion`, `fk_emprendimiento`, `fecha_publicacion`, `fk_categoria`, `clicks`, `impresiones`) VALUES (?,?, CURRENT_DATE(), ?, 0,0)"
-    db.query(sql,[nombre_publicacion, fk_emprendimiento, fk_categoria], (error, rows) => {
+    const {nombre_publicacion, fk_emprendimiento, fecha_publicacion, fk_categoria, clicks, impresiones} = req.query;
+    const sql = "INSERT INTO `publicaciones`(`nombre_publicacion`, `fk_emprendimiento`, `fecha_publicacion`, `fk_categoria`, `clicks`, `impresiones`) VALUES (?,?, ?, ?, ?,?)"
+    db.query(sql,[nombre_publicacion, fk_emprendimiento, fecha_publicacion, fk_categoria, clicks, impresiones], (error, rows) => {
         if(error){
             return res.status(500).json({error : "ERROR: Intente mas tarde por favor"});
         }
@@ -44,10 +43,11 @@ const create_public = (req, res) => {
 
 const update_public = (req, res) => {
     const {id_publicacion} = req.query;
-    const {nombre_publicacion, fk_categoria} = req.query;
-    const sql = "UPDATE `publicaciones` SET `nombre_publicacion`=?, fk_categoria = ? WHERE pk_publicacion = ?";
+    const {nombre_publicacion, fk_emprendimiento, fecha_publicacion, fk_categoria, clicks, impresiones} = req.query;
+    console.log(clicks, impresiones);
+    const sql = "UPDATE `publicaciones` SET `nombre_publicacion`=?,`fk_emprendimiento`=?,`fecha_publicacion`=?,`fk_categoria`=?,`clicks`=?,`impresiones`=? WHERE pk_publicacion = ?";
     
-    db.query(sql, [nombre_publicacion, fk_categoria, id_publicacion], (error, result) => {  
+    db.query(sql, [nombre_publicacion, fk_emprendimiento, fecha_publicacion, fk_categoria, clicks, impresiones, id_publicacion], (error, result) => {  
         if (error) {
             return res.status(500).json({error: "ERROR: Intente más tarde por favor"});
         }
@@ -56,7 +56,7 @@ const update_public = (req, res) => {
             return res.status(404).json({error: "ERROR: La publicacion a modificar no existe"});
         }
         
-        const user = {...req.body, id_publicacion, nombre_publicacion, fk_categoria};  
+        const user = {...req.body, nombre_publicacion, fk_emprendimiento, fecha_publicacion, fk_categoria, clicks, impresiones, id_publicacion};  
         res.status(201).json(user);
     });
 };
@@ -82,5 +82,5 @@ module.exports = {
     delete_publi,
     update_public,
     create_public,
-    rand_publis
+    all_publis
 };

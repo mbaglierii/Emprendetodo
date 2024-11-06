@@ -32,23 +32,20 @@
             <h2 id="dialogTitle">Título del Diálogo</h2>
             <div id="dialogContent">
             </div>
-            <button onclick="closeDialog()">Cerrar</button>
-            <button id="confirmButton" onclick="confirmAction()" style="margin-left: 10px;">Confirmar</button>
         </div>
         
 
         <div class="tabs">
             <div class="tab active" data-tab="tab_categorias">Categorias</div>
             <div class="tab" data-tab="tab2">Emprendimientos</div>
-            <div class="tab" data-tab="tab3">Generos</div>
+            <div class="tab" data-tab="tab3">Usuarios</div>
             <div class="tab" data-tab="tab4">Localidades</div>
             <div class="tab" data-tab="tab5">Provincias</div>
             <div class="tab" data-tab="tab6">Publicaciones</div>
-            <div class="tab" data-tab="tab7">Usuarios</div>
         </div>
-    
+        
         <div class="tab-content active" id="tab_categorias">
-            <button class="add-button">Agregar Categoría</button>
+            <button id="boton_agregar_categoria" class="add-button">Agregar Categoría</button>
             <table class="data-table">
                 <thead>
                     <tr>
@@ -63,12 +60,98 @@
             
         </div>
     
-        <div class="tab-content" id="tab2">Contenido de la Pestaña 2</div>
-        <div class="tab-content" id="tab3">Contenido de la Pestaña 3</div>
-        <div class="tab-content" id="tab4">Contenido de la Pestaña 4</div>
-        <div class="tab-content" id="tab5">Contenido de la Pestaña 5</div>
-        <div class="tab-content" id="tab6">Contenido de la Pestaña 6</div>
-        <div class="tab-content" id="tab7">Contenido de la Pestaña 7</div>
+        <div class="tab-content" id="tab2">
+            <button id="boton_agregar_emprendimientos" class="add-button">Agregar Emprendimiento</button>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre Emprendimiento</th>
+                        <th>Fecha de creacion</th>
+                        <th>Reviews</th>
+                        <th>Usuario dueño</th>
+                        <th>Localidad</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="emprendimientos-table-body">
+                </tbody>
+            </table>
+
+        </div>
+        <div class="tab-content" id="tab3">
+            <button id="boton_agregar_usuarios" class="add-button">Agregar Usuario</button>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre de usuario</th>
+                        <th>Contraseña</th>
+                        <th>Email</th>
+                        <th>Numero de provincia</th>
+                        <th>Numero de localidad</th>
+                        <th>Genero </th>
+                        <th>Direccion de imagen</th>
+                        <th>Admin</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="usuarios-table-body">
+                </tbody>
+            </table>
+
+        </div>
+        <div class="tab-content" id="tab4">
+            <button id="boton_agregar_localidad" class="add-button">Agregar Localidad</button>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre de localidad</th>
+                        <th>Numero de provincia</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="localidades-table-body">
+                </tbody>
+            </table>
+        </div>
+        <div class="tab-content" id="tab5">
+
+            <button id="boton_agregar_provincia" class="add-button">Agregar publicacion</button>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre de publicacion</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="provincias-table-body">
+                </tbody>
+            </table>
+
+        </div>
+        <div class="tab-content" id="tab6">
+            
+            <button id="boton_agregar_publicacion" class="add-button">Agregar publicacion</button>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre de publicacion</th>
+                        <th>Numero de emprendimiento</th>
+                        <th>Fecha de publicacion</th>
+                        <th>Numero de categoria</th>
+                        <th>Clicks</th>
+                        <th>Impresiones</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="publicaciones-table-body">
+                </tbody>
+            </table>
+        </div>
     </main>
     
 
@@ -100,7 +183,14 @@
         </div>
     </footer>
     <script src="script.js"></script>
-    <script src="scripts/admins_script/categorias.js"></script>
+    <script src="scripts/admins_script/dialog.js"></script>
+    <script type="module" src="scripts/admins_script/usuarios.js"></script>
+    <script type="module" src="scripts/admins_script/categorias.js"></script>
+    <script type="module" src="scripts/admins_script/emprendimientos.js"></script>
+    <script type="module" src="scripts/admins_script/localidades.js"></script>
+    <script type="module" src="scripts/admins_script/publicaciones.js"></script>
+    <script type="module" src="scripts/admins_script/provincias.js"></script>
+
     <script src="scripts/nav_handler.js"></script>
     <script src="admins.js"></script>
 </body>

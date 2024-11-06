@@ -5,7 +5,7 @@ const controller = require("../controllers/publicaciones_controller");
 
 router.get('/find', controller.find_publis)
 
-router.get('/', controller.rand_publis)
+router.get('/', controller.all_publis)
 
 router.post('/create', controller.create_public)
 

@@ -1,8 +1,10 @@
+import { openDialog, closeDialog } from './dialog.js';  
 
-const dialog = require("dialog.js");
-
-document.addEventListener("DOMContentLoaded", () => {
+function cargarCategorias() {
     const tbody = document.getElementById("category-table-body");
+
+    tbody.innerHTML = ""; 
+
 
     fetch("/categorias/")
         .then(response => response.json())
@@ -39,18 +41,34 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         })
         .catch(error => console.error("Error al obtener categorías:", error));
-});
+}
 
-function confirmAction() {
-    const values = currentFields.map(input => input.value); 
-    console.log("Valores confirmados:", values); 
+function agregarCategoria(){
+    openDialog(0, "Agregar Categoria", [
+        { placeholder: "Categoria", value: "" }
+    ], agregarCategoriaBoton);
+}
+
+function agregarCategoriaBoton(id, categoria){
+    fetch(`/categorias/create?categoria=${categoria[0]}`, {
+        method: 'POST',
+    })
+    cargarCategorias();
+    closeDialog();
+}
+
+function confirmarModificacion(id, values) {
+    fetch(`/categorias/modificar_categoria?id_categoria=${id}&categoria=${values[0]}`, {
+        method: 'PUT',
+    })
+    cargarCategorias();
     closeDialog();
 }
 
 function modificarCategoria(id, nombreCategoria) {
-    dialog.openDialog("Modificar Categoria", [
+    openDialog(id, "Modificar Categoria", [
         { placeholder: "Categoria", value: nombreCategoria }
-    ], confirmAction());
+    ], confirmarModificacion);
 }
 
 function eliminarCategoria(id) {
@@ -70,3 +88,5 @@ function eliminarCategoria(id) {
     }
 }
 
+document.addEventListener("DOMContentLoaded", cargarCategorias);
+document.getElementById("boton_agregar_categoria").addEventListener("click", agregarCategoria);
