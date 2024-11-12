@@ -36,6 +36,18 @@ function cargarEmprendimientos() {
                 fk_localidad.textContent = categoria.fk_localidad;
                 row.appendChild(fk_localidad);
 
+                const imagen_dir_perfil_empren = document.createElement("td");
+                imagen_dir_perfil_empren.textContent = categoria.imagen_dir_perfil_empren;
+                row.appendChild(imagen_dir_perfil_empren);
+
+                const descripcion = document.createElement("td");
+                descripcion.textContent = categoria.descripcion;
+                row.appendChild(descripcion);
+
+                const telefono = document.createElement("td");
+                telefono.textContent = categoria.telefono;
+                row.appendChild(telefono);
+
                 const actionsCell = document.createElement("td");
 
                 const editButton = document.createElement("button");
@@ -65,23 +77,67 @@ function agregarEmprendimiento(){
         { placeholder: "Reviews", value: "" },
         { placeholder: "Numero de usuario", value: "" },
         { placeholder: "Numero de localidad", value: "" },
+        { placeholder: "Descripcion", value: "" },
+        { placeholder: "Telefono", value: "" },
 
     ], agregarEmprendimientoBoton);
+
+    const dialogContent = document.getElementById("dialogContent");
+    const fileLabel = document.createElement("label");
+    fileLabel.textContent = "Imagen Emprendimiento";
+    const fileInput = document.createElement("input");
+    fileInput.type = "file";
+    fileInput.name = "archivo"; 
+
+    dialogContent.insertBefore(fileLabel, dialogContent.lastChild.previousSibling);
+    dialogContent.insertBefore(fileInput, dialogContent.lastChild.previousSibling);
 }
 
-function agregarEmprendimientoBoton(id, valores){
+async function agregarEmprendimientoBoton(id, valores){
     
-    console.log(valores);
-        fetch(`/emprendimientos/create?nombre_emprendimiento=${valores[0]}&fecha_creacion=${valores[1]}&reviews=${valores[2]}&fk_user=${valores[3]}&fk_localidad=${valores[4]}`, {
-        method: 'POST',
+
+    const fileInput = document.getElementById("dialogContent").querySelector("input[type='file']");
+    const selectedFile = fileInput.files[0]; 
+
+    const formData = new FormData();
+    formData.append("imagen", selectedFile);
+    formData.append("nombre_emprendimiento", valores[0]);
+    formData.append("fecha_creacion", valores[1]);
+    formData.append("reviews", valores[2]);
+    formData.append("fk_user", valores[3]);
+    formData.append("fk_localidad", valores[4]);
+    formData.append("descripcion", valores[5]);
+    formData.append("telefono", valores[6]);
+
+
+    await fetch(`/emprendimientos/create`, {
+    method: 'POST',
+    body: formData
     })
     cargarEmprendimientos();
     closeDialog();
 }
 
-function confirmarEmprendimiento(id, values) {
-    fetch(`/emprendimientos/modificar_emprendimiento?nombre_emprendimiento=${values[0]}&fecha_creacion=${formatearFecha(values[1])}&reviews=${values[2]}&fk_user=${values[3]}&fk_localidad=${values[4]}&pk_emprendimiento=${id}`, {
+async function confirmarEmprendimiento(id, values) {
+
+    const fileInput = document.getElementById("dialogContent").querySelector("input[type='file']");
+    const selectedFile = fileInput.files[0]; 
+
+    const formData = new FormData();
+    formData.append("imagen", selectedFile);
+    formData.append("nombre_emprendimiento", values[0]);
+    formData.append("fecha_creacion", values[1]);
+    formData.append("reviews", values[2]);
+    formData.append("fk_user", values[3]);
+    formData.append("fk_localidad", values[4]);
+    formData.append("descripcion", values[5]);
+    formData.append("telefono", values[6]);
+    formData.append("pk_emprendimiento", id);
+
+
+    await fetch(`/emprendimientos/modificar_emprendimiento`, {
         method: 'PUT',
+        body : formData
     })
     cargarEmprendimientos();
     closeDialog();
@@ -93,8 +149,20 @@ function modificarCategoria(id, categoria) {
         { placeholder: "Fecha de creacion", value: formatearFecha(categoria.fecha_creacion) },
         { placeholder: "Reviews", value: categoria.reviews },
         { placeholder: "Numero de usuario", value: categoria.fk_user},
-        { placeholder: "Numero de localidad", value: categoria.fk_localidad }
+        { placeholder: "Numero de localidad", value: categoria.fk_localidad },
+        { placeholder: "Descripcion", value: categoria.descripcion },
+        { placeholder: "Telefono", value: categoria.telefono },
     ], confirmarEmprendimiento);
+
+    const dialogContent = document.getElementById("dialogContent");
+    const fileLabel = document.createElement("label");
+    fileLabel.textContent = "Imagen Emprendimiento";
+    const fileInput = document.createElement("input");
+    fileInput.type = "file";
+    fileInput.name = "archivo"; 
+
+    dialogContent.insertBefore(fileLabel, dialogContent.lastChild.previousSibling);
+    dialogContent.insertBefore(fileInput, dialogContent.lastChild.previousSibling);
 }
 
 function eliminarEmprendimiento(id) {

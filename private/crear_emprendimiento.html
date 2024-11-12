@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emprendetodo</title>
+    <link rel="stylesheet" href="/estilos/styles.css">
+    <link rel="stylesheet" href="/estilos/emprendimiento.css">
+</head>
+<body>    
+    <nav class="navbar">
+        <ul class="nav-items">
+            <li><a href="/">Home</a></li>
+            <li><a href="#">Contacto</a></li>
+            <li><a id="ofertasBtn" href="/ofertas">Ofertas</a></li>
+        </ul>
+        <div class="nav-buttons" id="navButtons">
+            <button class="btn login"><a href="login.html">Iniciar sesion</a></button>
+            <button class="btn register"><a href="register.html">Registrarse</a></button>
+        </div>
+        <div id="user-info" class="user-info hidden">
+                <button id="PAdmin" class="btn hidden"><a href="/admins">Panel Admin</a></button>
+            <span class="greeting">Hola,</span>
+            <img src="" alt="Foto de Perfil" class="profile-pic">
+            <button class="btn logout">Cerrar sesión</button>
+        </div>
+    </nav>
+        <main>
+            <form id="crearEmprendimientoForm" action="/crear_emprendimiento" method="POST" enctype="multipart/form-data">
+                <h1>Crear Emprendimiento</h1>
+                <label for="nombre_emprendimiento">Nombre del Emprendimiento:</label>
+                <input type="text" id="nombre_emprendimiento" name="nombre_emprendimiento" maxlength="60" required>
+                
+                <label for="province">Provincia:</label>
+                <select id="province" name="fk_provincia" required>
+                    <option value="">Selecciona tu provincia</option>
+                </select>
+        
+                <label for="fk_localidad">Localidad:</label>
+                <select id="fk_localidad" name="fk_localidad" required>
+                    <option value="">Selecciona tu localidad</option>
+                </select>
+
+                <label for="imagen">Imagen de Perfil:</label>
+                <input type="file" id="imagen_dir_perfil_empren" name="imagen" accept="image/*" required>
+        
+                <label for="descripcion">Descripción:</label>
+                <textarea id="descripcion" name="descripcion" maxlength="300" required></textarea>
+        
+                <label for="telefono">Teléfono:</label>
+                <input type="tel" id="telefono" name="telefono" required>
+        
+                <button>Crear Emprendimiento</button>
+            </form>
+        </main>    
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="social-media">
+                <a href="https://facebook.com" target="_blank">
+                    <img src="images/facebook-logo.png" alt="Facebook" class="social-icon">
+                </a>
+                <a href="https://twitter.com" target="_blank">
+                    <img src="images/twitter-sign.png" alt="Twitter" class="social-icon">
+                </a>
+                <a href="https://instagram.com" target="_blank">
+                    <img src="images/instagram-symbol.png" alt="Instagram" class="social-icon">
+                </a>
+                <div class="separator_v_chico"></div>
+
+                <div class="footer-contacto">
+                    <p>Teléfono: +54 1142345364</p>
+                    <p>Email: contacto@emprendetodo.com</p>
+                </div>
+            </div>
+
+            <div class="promo-text">
+                <p>Sos emprendedor? Queres publicitar tu emprendimiento en <strong>EMPRENDEDORES.COM</strong>? 
+                    <a href="https://emprendedores.com/publicitar" target="_blank" class="promo-link">HACE CLICK ACÁ</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+    <script src="script.js"></script>
+    <script src="scripts/emprendimiento.js"></script>
+    <script src="scripts/nav_handler.js"></script>
+    <script src="admins.js"></script>
+</body>
+</html>

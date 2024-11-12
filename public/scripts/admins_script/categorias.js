@@ -21,6 +21,10 @@ function cargarCategorias() {
                 nameCell.textContent = categoria.nombre_categoria;
                 row.appendChild(nameCell);
 
+                const imagen_dir_categoria = document.createElement("td");
+                imagen_dir_categoria.textContent = categoria.imagen_dir_categoria;
+                row.appendChild(imagen_dir_categoria);
+
                 const actionsCell = document.createElement("td");
 
                 const editButton = document.createElement("button");
@@ -47,19 +51,50 @@ function agregarCategoria(){
     openDialog(0, "Agregar Categoria", [
         { placeholder: "Categoria", value: "" }
     ], agregarCategoriaBoton);
+
+    const dialogContent = document.getElementById("dialogContent");
+    const fileLabel = document.createElement("label");
+    fileLabel.textContent = "Imagen Categoria";
+    const fileInput = document.createElement("input");
+    fileInput.type = "file";
+    fileInput.name = "archivo"; 
+
+    dialogContent.insertBefore(fileLabel, dialogContent.lastChild.previousSibling);
+    dialogContent.insertBefore(fileInput, dialogContent.lastChild.previousSibling);
 }
 
-function agregarCategoriaBoton(id, categoria){
-    fetch(`/categorias/create?categoria=${categoria[0]}`, {
+async function agregarCategoriaBoton(id, categoria){
+
+    const fileInput = document.getElementById("dialogContent").querySelector("input[type='file']");
+    const selectedFile = fileInput.files[0]; 
+
+    const formData = new FormData();
+    formData.append("imagen", selectedFile); 
+    formData.append("categoria", categoria); 
+
+
+    await fetch(`/categorias/create`, {
         method: 'POST',
+        body : formData
     })
+
     cargarCategorias();
     closeDialog();
 }
 
-function confirmarModificacion(id, values) {
-    fetch(`/categorias/modificar_categoria?id_categoria=${id}&categoria=${values[0]}`, {
+async function confirmarModificacion(id, values) {
+
+    const fileInput = document.getElementById("dialogContent").querySelector("input[type='file']");
+    const selectedFile = fileInput.files[0]; 
+
+    const formData = new FormData();
+    formData.append("imagen", selectedFile); 
+    formData.append("categoria", values); 
+    formData.append("id_categoria", id); 
+
+    await fetch(`/categorias/modificar_categoria`, {
         method: 'PUT',
+        body : formData
     })
     cargarCategorias();
     closeDialog();
@@ -69,6 +104,16 @@ function modificarCategoria(id, nombreCategoria) {
     openDialog(id, "Modificar Categoria", [
         { placeholder: "Categoria", value: nombreCategoria }
     ], confirmarModificacion);
+
+    const dialogContent = document.getElementById("dialogContent");
+    const fileLabel = document.createElement("label");
+    fileLabel.textContent = "Imagen Categoria";
+    const fileInput = document.createElement("input");
+    fileInput.type = "file";
+    fileInput.name = "archivo"; 
+
+    dialogContent.insertBefore(fileLabel, dialogContent.lastChild.previousSibling);
+    dialogContent.insertBefore(fileInput, dialogContent.lastChild.previousSibling);
 }
 
 function eliminarCategoria(id) {

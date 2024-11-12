@@ -60,7 +60,7 @@ header .logo img {
 }
 
 .categoria {
-    min-width: 150px;
+    width: 150px;  /* Puedes definir un tamaño fijo para que no se altere con el contenido */
     height: 150px;
     margin: 0 10px;
     padding: 10px;
@@ -72,8 +72,8 @@ header .logo img {
     display: flex;
     align-items: center;
     justify-content: center;
+    border: 1px solid #ccc; /* Mantén el borde si quieres el estilo */
 }
-
 html, body {
     height: 100%;
     margin: 0;
@@ -96,8 +96,10 @@ html, body {
 }
 
 .categoria img {
-    width: 115px;
-    height: 115px;
+    width: 130px;
+    height: 130px;
+    border-radius: 50%; 
+    object-fit: cover;
 }
 
 .barra-busqueda input[type="text"] {

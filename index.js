@@ -13,12 +13,21 @@ process.env.S_KEY_ADMIN =  '9jXdUJ8VEgLoEyF0y4Hxg16hgP0OPyB'
 
 app.use('/user_ProfilePicture', express.static(path.join(__dirname, '/user_ProfilePicture')));
 
+app.use('/category_photos', express.static(path.join(__dirname, '/category_photos')));
+
+app.use('/emprendimiento_photos', express.static(path.join(__dirname, '/emprendimiento_photos')));
+
+
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 app.get('/ofertas', auth.verify_user,(req, res) => {
     res.sendFile(__dirname + "/private/ofertas.html");
+});
+
+app.get('/crearemprendimiento', auth.verify_user,(req, res) => {
+    res.sendFile(__dirname + "/private/crear_emprendimiento.html");
 });
 
 app.get('/admins', auth.verify_admin,(req, res) => {

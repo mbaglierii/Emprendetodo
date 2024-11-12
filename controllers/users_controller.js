@@ -74,6 +74,7 @@ const create_user = async (req, res) => {
     if(req.file){
         pfp = req.file.filename
     }
+    console.log(req.file);
     const {username, email, password, fk_provincia, fk_localidad, fk_genero} = req.body;
     console.log(username, email, password, fk_provincia, fk_localidad, fk_genero, pfp);
     if(password.length < 8){

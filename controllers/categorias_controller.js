@@ -28,10 +28,13 @@ const find_cat = (req, res) => {
 
 
 const create_cat = (req, res) => {
-    const {categoria} = req.query;
-    const sql = "INSERT INTO `categorias`(`nombre_categoria`) VALUES (?)"
-    db.query(sql,[categoria], (error, rows) => {
-        console.log(rows);
+    const {categoria} = req.body;
+    var cat_image = "";
+    if(req.file){
+        cat_image = req.file.filename
+    }
+    const sql = "INSERT INTO `categorias`(`nombre_categoria`, imagen_dir_categoria) VALUES (?, ?)"
+    db.query(sql,[categoria, cat_image], (error, rows) => {
         if(error){
             return res.status(500).json({error : "ERROR: Intente mas tarde por favor"});
         }
@@ -42,11 +45,27 @@ const create_cat = (req, res) => {
 
 
 const update_cat = (req, res) => {
-    const {id_categoria} = req.query;
-    const {categoria} = req.query;
-    const sql = "UPDATE `categorias` SET `nombre_categoria`=? WHERE pk_categoria = ?";
+    const {id_categoria, categoria} = req.body;
     
-    db.query(sql, [categoria, id_categoria], (error, result) => {  
+    if(req.file){
+        cat_image = req.file.filename
+        const sql = "UPDATE `categorias` SET `nombre_categoria`=?, imagen_dir_categoria= ? WHERE pk_categoria = ?";
+        db.query(sql, [categoria,cat_image, id_categoria], (error, result) => {  
+        console.log('ID del usuario:', id_categoria); 
+        if (error) {
+            return res.status(500).json({error: "ERROR: Intente más tarde por favor"});
+        }
+        
+        if (result.length == 0) {  
+            return res.status(404).json({error: "ERROR: La categoria a modificar no existe"});
+        }
+        
+        const user = {...req.body, id_categoria, categoria, cat_image};  
+        res.status(201).json(user);
+    });
+    }else{
+        const sql = "UPDATE `categorias` SET `nombre_categoria`=? WHERE pk_categoria = ?";
+        db.query(sql, [categoria, id_categoria], (error, result) => {  
         console.log('ID del usuario:', id_categoria); 
         if (error) {
             return res.status(500).json({error: "ERROR: Intente más tarde por favor"});
@@ -58,7 +77,9 @@ const update_cat = (req, res) => {
         
         const user = {...req.body, id_categoria, categoria};  
         res.status(201).json(user);
-    });
+        });
+    }
+    
 };
 
 

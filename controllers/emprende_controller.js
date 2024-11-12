@@ -28,9 +28,13 @@ const find_emprendimientos = (req, res) => {
 
 
 const create_emprendimiento = (req, res) => {
-    const {nombre_emprendimiento, fecha_creacion, reviews, fk_user, fk_localidad} = req.query;
-    const sql = "INSERT INTO `emprendimientos`(`nombre_emprendimiento`, `fecha_creacion`, `reviews`, `fk_user`, `fk_localidad`) VALUES (?,?,?,?,?)"
-    db.query(sql,[nombre_emprendimiento, fecha_creacion, reviews, fk_user, fk_localidad], (error, rows) => {
+    var cat_image = "";
+    if(req.file){
+        cat_image = req.file.filename
+    }
+    const {nombre_emprendimiento, fecha_creacion, reviews, fk_user, fk_localidad, descripcion, telefono} = req.body;
+    const sql = "INSERT INTO `emprendimientos`(`nombre_emprendimiento`, `fecha_creacion`, `reviews`, `fk_user`, `fk_localidad`, imagen_dir_perfil_empren, descripcion, telefono) VALUES (?,?,?,?,?,?,?,?)"
+    db.query(sql,[nombre_emprendimiento, fecha_creacion, reviews, fk_user, fk_localidad, cat_image, descripcion, telefono], (error, rows) => {
         if(error){
             return res.status(500).json({error : "ERROR: Intente mas tarde por favor"});
         }
@@ -41,9 +45,13 @@ const create_emprendimiento = (req, res) => {
 
 
 const update_emprendemiento = (req, res) => {
-    const {nombre_emprendimiento,fecha_creacion,  reviews, fk_user, fk_localidad, pk_emprendimiento} = req.query;
-    const sql = "UPDATE `emprendimientos` SET `nombre_emprendimiento`=?,`fecha_creacion`=?,`reviews`=?,`fk_user`=?,`fk_localidad`= ? WHERE pk_emprendimiento = ?";
-    db.query(sql, [nombre_emprendimiento,fecha_creacion,  reviews, fk_user, fk_localidad, pk_emprendimiento], (error, result) => {  
+    var cat_image = "";
+    if(req.file){
+        cat_image = req.file.filename
+    }
+    const {nombre_emprendimiento, fecha_creacion, reviews, fk_user, fk_localidad, descripcion, telefono, pk_emprendimiento} = req.body;
+    const sql = "UPDATE `emprendimientos` SET `nombre_emprendimiento`=?,`fecha_creacion`=?,`reviews`=?,`fk_user`=?,`fk_localidad`= ? , imagen_dir_perfil_empren = ?, descripcion = ? , telefono= ? WHERE pk_emprendimiento = ?";
+    db.query(sql, [nombre_emprendimiento,fecha_creacion,  reviews, fk_user, fk_localidad,cat_image,  descripcion, telefono, pk_emprendimiento], (error, result) => {  
         if (error) {
             console.log(error);
             return res.status(500).json({error: "ERROR: Intente más tarde por favor"});

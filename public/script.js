@@ -37,10 +37,34 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 
+function cargarCategorias() {
+    fetch('/categorias')
+        .then(response => response.json()) 
+        .then(categorias => {
+            const categoriasContainer = document.querySelector('.categorias');
+            categoriasContainer.innerHTML = '';
 
+            categorias.forEach(categoria => {
+                const categoriaDiv = document.createElement('div');
+                categoriaDiv.classList.add('categoria');
+                
+                const img = document.createElement('img');
+                img.src = 'category_photos/' + categoria.imagen_dir_categoria; 
+                img.alt = categoria.nombre_categoria;  
+
+                categoriaDiv.appendChild(img);
+
+               
+
+                categoriasContainer.appendChild(categoriaDiv);
+            });
+        })
+        .catch(error => {
+            console.error('Error al cargar las categorías:', error);
+        });
+}
 
 const categorias = document.querySelector('.categorias');
-console.log("Elemento 'categorias' seleccionado:", categorias);
 
 let scrollSpeed = 1;
 let intervalId;
@@ -49,19 +73,20 @@ function scrollCategorias() {
     categorias.scrollLeft += scrollSpeed;
 
     if (categorias.scrollLeft >= categorias.scrollWidth - categorias.clientWidth) {
-        categorias.scrollLeft = 0;
+        categorias.scrollLeft = 0;  
     }
 }
 
 function startScroll() {
-    intervalId = setInterval(scrollCategorias, 30);
+    intervalId = setInterval(scrollCategorias, 30); 
 }
 
 function stopScroll() {
-    clearInterval(intervalId);
+    clearInterval(intervalId); 
 }
 
 categorias.addEventListener('mouseenter', stopScroll);
 categorias.addEventListener('mouseleave', startScroll);
 
 startScroll();
+window.onload = cargarCategorias;
