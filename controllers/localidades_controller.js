@@ -15,7 +15,6 @@ const find_localidades = (req, res) => {
     const {fk_provincia} = req.query;
     const sql = "SELECT * FROM localidades WHERE fk_provincia = ?"
     db.query(sql,[fk_provincia], (error, rows) => {
-        console.log(rows);
         if(error){
             return res.status(500).json({error : "ERROR: Intente mas tarde por favor"});
         }

@@ -33,6 +33,8 @@ const create_emprendimiento = (req, res) => {
         cat_image = req.file.filename
     }
     const {nombre_emprendimiento, fecha_creacion, reviews, fk_user, fk_localidad, descripcion, telefono} = req.body;
+
+    console.log(nombre_emprendimiento, fecha_creacion, reviews, fk_user, fk_localidad, descripcion, telefono, cat_image);
     const sql = "INSERT INTO `emprendimientos`(`nombre_emprendimiento`, `fecha_creacion`, `reviews`, `fk_user`, `fk_localidad`, imagen_dir_perfil_empren, descripcion, telefono) VALUES (?,?,?,?,?,?,?,?)"
     db.query(sql,[nombre_emprendimiento, fecha_creacion, reviews, fk_user, fk_localidad, cat_image, descripcion, telefono], (error, rows) => {
         if(error){

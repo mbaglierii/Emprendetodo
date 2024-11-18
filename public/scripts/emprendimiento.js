@@ -10,23 +10,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         const formData = new FormData(form);
-        formData.append("nombre_emprendimiento", document.getElementById("nombre_emprendimiento").value);
+        console.log(formData.entries());
         formData.append("fecha_creacion", obtenerFechaHoy());
         formData.append("reviews", 0);
-        formData.append("fk_user", pkUser);  
-        formData.append("fk_localidad", document.getElementById("fk_localidad").value);
-        formData.append("descripcion", document.getElementById("descripcion").value);
-        formData.append("telefono", document.getElementById("telefono").value);
-
+        formData.append("fk_user", pkUser);
         
-        const fileInput = document.getElementById("imagen_dir_perfil_empren").querySelector("input[type='file']");
-        const selectedFile = fileInput.files[0]; 
-        formData.append("imagen", selectedFile)
-
-        console.log(formData);
-
         try {
-            const response = await fetch("/emprendimiento/create", {
+            const response = await fetch("/emprendimientos/create", {
                 method: "POST",
                 body: formData
             });
