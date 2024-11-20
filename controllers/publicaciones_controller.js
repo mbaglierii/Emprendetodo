@@ -67,10 +67,66 @@ const find_publis = (req, res) => {
 };
 
 
+const find_publication = (req, res) => {
+    const {pk_publicacion} = req.query;
+    const sql = `
+        SELECT 
+            p.pk_publicacion,
+            p.nombre_publicacion,
+            p.descripcion,
+            p.fk_emprendimiento,
+            p.fecha_publicacion,
+            p.fk_categoria,
+            p.clicks,
+            p.impresiones,
+            i.imagen_dir_publicacion,
+            e.nombre_emprendimiento
+        FROM 
+            publicaciones p
+        LEFT JOIN
+            emprendimientos e
+        on
+            e.pk_emprendimiento = p.fk_emprendimiento
+        LEFT JOIN 
+            imagenes_publicaciones_dir i 
+        ON 
+            p.pk_publicacion = i.fk_publicacion
+        WHERE 
+            p.pk_publicacion = ?
+    `;
+    const searchTerm = pk_publicacion;
 
+    db.query(sql, [searchTerm], (error, rows) => {
+        if (error) {
+            return res.status(500).json({ error: "ERROR: Intente más tarde por favor" });
+        }
+        if (rows.length === 0) {
+            return res.status(404).json({ error: "ERROR: No existe la publicación buscada" });
+        }
+
+        const publicaciones = rows.reduce((acc, row) => {
+            const { pk_publicacion, imagen_dir_publicacion, ...publicacionData } = row;
+
+            if (!acc[pk_publicacion]) {
+                acc[pk_publicacion] = {
+                    ...publicacionData,
+                    pk_publicacion,
+                    imagenes: [],
+                };
+            }
+
+            if (imagen_dir_publicacion) {
+                acc[pk_publicacion].imagenes.push(imagen_dir_publicacion);
+            }
+
+            return acc;
+        }, {});
+
+        res.json(Object.values(publicaciones));
+    });
+};
 
 const create_public = (req, res) => {
-    console.log( req.files); 
     const { nombre_publicacion, descripcion, fk_emprendimiento, fecha_publicacion, fk_categoria, clicks, impresiones } = req.body;
 
     const sql = "INSERT INTO `publicaciones`(`nombre_publicacion`, `descripcion`, `fk_emprendimiento`, `fecha_publicacion`, `fk_categoria`, `clicks`, `impresiones`) VALUES (?,?,?,?,?,?,?)";
@@ -149,5 +205,6 @@ module.exports = {
     delete_publi,
     update_public,
     create_public,
-    all_publis
+    all_publis,
+    find_publication
 };

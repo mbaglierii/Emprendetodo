@@ -27,7 +27,7 @@ const find_user = async (req, res) => {
     const {username, password} = req.body;
     console.log(username, password)
     
-    const sql = "SELECT users.pk_user, users.username, users.password, users.email, users.fk_provincia, users.fk_localidad, users.fk_genero, users.imagen_dir, users.admin pk_emprendimientos FROM users left JOIN emprendimientos ON users.pk_user = emprendimientos.fk_user WHERE users.username = ?";
+    const sql = "SELECT users.pk_user, users.username, users.password, users.email, users.fk_provincia, users.fk_localidad, users.fk_genero, users.imagen_dir, users.admin, emprendimientos.pk_emprendimiento FROM users left JOIN emprendimientos ON users.pk_user = emprendimientos.fk_user WHERE users.username = ?";
     db.query(sql,[username], async (error, rows) => {
         if (error) {
             return res.status(500).json({ error: "ERROR: Intente más tarde por favor" });

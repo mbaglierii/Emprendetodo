@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const userInfoString = localStorage.getItem("userInfo");
         const userInfo = JSON.parse(userInfoString);
-        const pkUser = userInfo.pk_emprendimientos;            
+        const pkUser = userInfo.pk_emprendimiento;            
 
 
         const formData = new FormData(form);

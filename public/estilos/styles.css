@@ -150,6 +150,83 @@ html, body {
     align-items: center;
 }
 
+.cuadro:hover {
+    filter: brightness(85%);
+    transform: scale(1.05);
+
+}
+
+.informacion-publicacion {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    max-width: 600px;
+    background: #f9f9f9;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    padding: 20px;
+    z-index: 1000;
+    display: none;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.informacion-publicacion h2 {
+    margin-top: 0;
+    font-size: 24px;
+    color: #333;
+    text-align: center;
+}
+
+.informacion-publicacion p {
+    font-size: 16px;
+    color: #555;
+    line-height: 1.6;
+    text-align: justify;
+}
+
+#imagenes-publicacion {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 15px 0;
+}
+
+#imagenes-publicacion img {
+    width: 120px;
+    height: auto;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease;
+}
+
+#imagenes-publicacion img:hover {
+    transform: scale(1.1);
+}
+
+#cerrar-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #ff4d4d;
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+#cerrar-btn:hover {
+    background: #ff3333;
+}
+
+
 .profile-pic {
     width: 50px; 
     height: 50px; 
