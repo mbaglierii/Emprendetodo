@@ -27,7 +27,7 @@ app.get('/ofertas', auth.verify_user,(req, res) => {
     res.sendFile(__dirname + "/private/ofertas.html");
 });
 
-app.get('/crearpublicaciones', (req, res) => {
+app.get('/crearpublicaciones', auth.verify_user, (req, res) => {
     res.sendFile(__dirname + "/private/crear_publicaciones.html");
 });
 

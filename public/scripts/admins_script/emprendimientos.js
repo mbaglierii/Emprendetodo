@@ -48,6 +48,7 @@ function cargarEmprendimientos() {
                 telefono.textContent = categoria.telefono;
                 row.appendChild(telefono);
 
+
                 const actionsCell = document.createElement("td");
 
                 const editButton = document.createElement("button");

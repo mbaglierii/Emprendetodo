@@ -1,3 +1,6 @@
+
+import { fetchPublicaciones } from './scripts/filter_index.js';  
+
 document.addEventListener("DOMContentLoaded", function () {
 
     const logoutButton = document.querySelector(".logout");
@@ -47,7 +50,9 @@ function cargarCategorias() {
             categorias.forEach(categoria => {
                 const categoriaDiv = document.createElement('div');
                 categoriaDiv.classList.add('categoria');
-                
+
+                categoriaDiv.setAttribute('data-id', categoria.pk_categoria); 
+
                 const img = document.createElement('img');
                 img.src = 'category_photos/' + categoria.imagen_dir_categoria; 
                 img.alt = categoria.nombre_categoria;  
@@ -63,79 +68,6 @@ function cargarCategorias() {
             console.error('Error al cargar las categorías:', error);
         });
 }
-
-//cargar publicaciones
-async function fetchPublicaciones(busqueda) {
-    try {
-        const response = await fetch(`/publicaciones/find?busqueda=${encodeURIComponent(busqueda)}`);
-        if (!response.ok) {
-            throw new Error('Error al obtener las publicaciones');
-        }
-        
-        const publicaciones = await response.json();
-        
-        const cuadrilla = document.querySelector('.cuadrilla');
-        cuadrilla.innerHTML = ''; 
-
-        publicaciones.forEach((publicacion) => {
-            console.log(publicacion);
-            const imagenSrc = publicacion.imagenes.length > 0 
-                ? `/publicaciones_photos/${publicacion.imagenes[0]}`
-                : 'images/artesany.png'; 
-            
-
-            const cuadro = document.createElement('div');
-            cuadro.classList.add('cuadro');
-            cuadro.setAttribute('data-id', publicacion.pk_publicacion); 
-            cuadro.addEventListener('click', function() {
-                mostrarInformacion(this); 
-            });
-
-            const img = document.createElement('img');
-            img.src = imagenSrc;
-            img.alt = publicacion.nombre_publicacion || 'Imagen de la publicación';
-            
-            cuadro.appendChild(img);
-            cuadrilla.appendChild(cuadro);
-        });
-    } catch (error) {
-        console.error('Error:', error);
-    }
-}
-
-
-function mostrarInformacion(element) {
-    const publicacionid = element.getAttribute('data-id');
-
-    console.log(publicacionid);
-
-    fetch(`/publicaciones/find_by_id?pk_publicacion=${publicacionid}`)
-        .then(response => response.json())
-        .then(data => {
-            document.getElementById('titulo-publicacion').textContent = data[0].nombre_publicacion;
-            document.getElementById('descripcion-publicacion').textContent = data[0].descripcion;
-
-            const imagenesContainer = document.getElementById('imagenes-publicacion');
-            imagenesContainer.innerHTML = ''; 
-            data[0].imagenes.forEach(imagen => {
-                const img = document.createElement('img');
-                img.src = `/publicaciones_photos/${imagen}`;
-                img.alt = data[0].nombre_publicacion;
-                img.style.width = '100px';
-                img.style.margin = '5px';
-                imagenesContainer.appendChild(img);
-            });
-
-            document.getElementById('emprendimiento-publicacion').textContent = `Emprendimiento: ${data[0].nombre_emprendimiento}`;
-            document.getElementById('informacion-publicacion').style.display = 'block';
-        })
-        .catch(error => console.error('Error al obtener la información:', error));
-}
-
-function cerrarInformacion() {
-    document.getElementById('informacion-publicacion').style.display = 'none';
-}
-
 
 
 

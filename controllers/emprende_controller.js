@@ -14,7 +14,7 @@ const all_emprendimientos = (req, res) => {
 
 const find_emprendimientos = (req, res) => {
     const {emprendimiento} = req.query;
-    const sql = "SELECT * FROM emprendimientos WHERE nombre_emprendimiento = ?"
+    const sql = "SELECT * FROM emprendimientos WHERE pk_emprendimiento = ?"
     db.query(sql,[emprendimiento], (error, rows) => {
         if(error){
             return res.status(500).json({error : "ERROR: Intente mas tarde por favor"});
@@ -40,7 +40,8 @@ const create_emprendimiento = (req, res) => {
         if(error){
             return res.status(500).json({error : "ERROR: Intente mas tarde por favor"});
         }
-        const user = {...req.body, nombre_emprendimiento, fecha_creacion, reviews, fk_user, fk_localidad}; 
+        const emprendimientoId = rows.insertId;
+        const user = {...req.body, emprendimientoId, nombre_emprendimiento, fecha_creacion, reviews, fk_user, fk_localidad}; 
         res.status(201).json(user);
     }); 
 }
@@ -50,18 +51,31 @@ const update_emprendemiento = (req, res) => {
     var cat_image = "";
     if(req.file){
         cat_image = req.file.filename
+        const {nombre_emprendimiento, fecha_creacion, reviews, fk_user, fk_localidad, descripcion, telefono, pk_emprendimiento} = req.body;
+        const sql = "UPDATE `emprendimientos` SET `nombre_emprendimiento`=?,`fecha_creacion`=?,`reviews`=?,`fk_user`=?,`fk_localidad`= ? , imagen_dir_perfil_empren = ?, descripcion = ? , telefono= ? WHERE pk_emprendimiento = ?";
+        db.query(sql, [nombre_emprendimiento,fecha_creacion,  reviews, fk_user, fk_localidad,cat_image,  descripcion, telefono, pk_emprendimiento], (error, result) => {  
+            if (error) {
+                console.log(error);
+                return res.status(500).json({error: "ERROR: Intente más tarde por favor"});
+            }
+            
+            const user = {...req.body, pk_emprendimiento,nombre_emprendimiento, reviews};  
+            res.status(201).json(user);
+        });
+    }else{
+        const {nombre_emprendimiento, fecha_creacion, reviews, fk_user, fk_localidad, descripcion, telefono, pk_emprendimiento} = req.body;
+        const sql = "UPDATE `emprendimientos` SET `nombre_emprendimiento`=?,`fecha_creacion`=?,`reviews`=?,`fk_user`=?,`fk_localidad`= ? , descripcion = ? , telefono= ? WHERE pk_emprendimiento = ?";
+        db.query(sql, [nombre_emprendimiento,fecha_creacion,  reviews, fk_user, fk_localidad,  descripcion, telefono, pk_emprendimiento], (error, result) => {  
+            if (error) {
+                console.log(error);
+                return res.status(500).json({error: "ERROR: Intente más tarde por favor"});
+            }
+            
+            const user = {...req.body, pk_emprendimiento,nombre_emprendimiento, reviews};  
+            res.status(201).json(user);
+        });
     }
-    const {nombre_emprendimiento, fecha_creacion, reviews, fk_user, fk_localidad, descripcion, telefono, pk_emprendimiento} = req.body;
-    const sql = "UPDATE `emprendimientos` SET `nombre_emprendimiento`=?,`fecha_creacion`=?,`reviews`=?,`fk_user`=?,`fk_localidad`= ? , imagen_dir_perfil_empren = ?, descripcion = ? , telefono= ? WHERE pk_emprendimiento = ?";
-    db.query(sql, [nombre_emprendimiento,fecha_creacion,  reviews, fk_user, fk_localidad,cat_image,  descripcion, telefono, pk_emprendimiento], (error, result) => {  
-        if (error) {
-            console.log(error);
-            return res.status(500).json({error: "ERROR: Intente más tarde por favor"});
-        }
-        
-        const user = {...req.body, pk_emprendimiento,nombre_emprendimiento, reviews};  
-        res.status(201).json(user);
-    });
+    
 };
 
 

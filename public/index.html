@@ -13,6 +13,7 @@
             <li><a href="#">Contacto</a></li>
             <li><a id="ofertasBtn" href="/ofertas">Ofertas</a></li>
             <li><a href="/crearemprendimiento">Crear Emprendimiento</a></li>
+            <li><a href="/crearpublicaciones">Crear Publicacion</a></li>
         </ul>
         <div class="nav-buttons" id="navButtons">
             <button class="btn login"><a href="login.html">Iniciar sesion</a></button>
@@ -43,8 +44,8 @@
         <div class="separator_h"></div>
 
         <div class="barra-busqueda">
-            <input type="text" placeholder="Buscar...">
-            <button type="submit" class="btn-busqueda">
+            <input id="text_busqueda" type="text" placeholder="Buscar...">
+            <button id="enviar_busqueda" type="submit" class="btn-busqueda">
                 🔍
             </button>
         </div>
@@ -55,13 +56,33 @@
             
         </div>
 
+        <div id="overlay">
+            <div id="popup">
+                <img id="popup-image" src="https://via.placeholder.com/120" alt="Imagen del Emprendimiento">
+                <div id="popup-content">
+                    <h2 id="popup-title"></h2>
+                    <p id="popup-date">Fecha de Creación: 2024-11-20</p>
+                    <p id="popup-reviews">Reviews: 10</p>
+                    <p id="popup-phone">Teléfono: +54 123 456 789</p>
+                    <p id="popup-description">Descripción: Este es un emprendimiento de ejemplo.</p>
+                    <button id="close-button">Cerrar</button>
+                </div>
+            </div>
+        </div>
+
         <div id="informacion-publicacion" class="informacion-publicacion">
+            
             <button id="cerrar-btn" onclick="cerrarInformacion()">✖ Cerrar</button>
             <h2 id="titulo-publicacion"></h2>
             <p id="descripcion-publicacion"></p>
             <div id="imagenes-publicacion"></div>
             <p id="emprendimiento-publicacion"></p>
+            <button id="show-button">Mostrar Emprendimiento</button>
+
         </div>
+        
+
+
         
 
         <div class="separator_h"></div>
@@ -97,7 +118,8 @@
         </footer>
     </main>
     
-    <script src="script.js"></script>
-    <script src="scripts/nav_handler.js"></script>
+    <script  type="module" src="script.js"></script>
+    <script  src="scripts/nav_handler.js"></script>
+    <script  type="module" src="scripts/filter_index.js"></script>
 </body>
 </html>

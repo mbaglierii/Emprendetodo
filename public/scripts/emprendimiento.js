@@ -8,6 +8,10 @@ document.addEventListener("DOMContentLoaded", () => {
         const userInfo = JSON.parse(userInfoString);
         const pkUser = userInfo.pk_user;            
 
+        if (userInfo.pk_emprendimiento !== null) {
+            alert("Ya tienes un emprendimiento asociado. No puedes crear otro.");
+            return;
+        }
 
         const formData = new FormData(form);
         console.log(formData.entries());
@@ -23,6 +27,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (response.ok) {
                 const result = await response.json();
+
+                const userInfoString = localStorage.getItem("userInfo");
+
+                const userInfo = JSON.parse(userInfoString);
+
+                userInfo.pk_emprendimiento = result.emprendimientoId; 
+            
+                localStorage.setItem("userInfo", JSON.stringify(userInfo));
+
                 alert("Emprendimiento creado con éxito");
                 form.reset(); 
             } else {

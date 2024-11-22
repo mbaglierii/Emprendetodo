@@ -22,6 +22,10 @@ function cargarPublicaciones() {
                 nameCell.textContent = publicacion.nombre_publicacion;
                 row.appendChild(nameCell);
 
+                const descripcion = document.createElement("td");
+                descripcion.textContent = publicacion.descripcion;
+                row.appendChild(descripcion);
+
                 const fk_emprendimiento = document.createElement("td");
                 fk_emprendimiento.textContent = publicacion.fk_emprendimiento;
                 row.appendChild(fk_emprendimiento);
@@ -41,6 +45,10 @@ function cargarPublicaciones() {
                 const impresiones = document.createElement("td");
                 impresiones.textContent = publicacion.impresiones;
                 row.appendChild(impresiones);
+
+                const imagenes = document.createElement("td");
+                imagenes.textContent = publicacion.imagenes;
+                row.appendChild(imagenes);
 
                 const actionsCell = document.createElement("td");
 
@@ -67,40 +75,115 @@ function cargarPublicaciones() {
 function agregarPublicacion(){
     openDialog(0, "Agregar Publicacion", [
         { placeholder: "Nombre de publicacion", value: "" },
+        { placeholder: "Descripcion", value: "" },
         { placeholder: "Numero de emprendimiento", value: "" },
         { placeholder: "Fecha de publicacion", value: "" },
         { placeholder: "Numero de categoria", value: "" },
         { placeholder: "Clicks", value: "" },
         { placeholder: "Impresiones", value: "" }
     ], agregarPublicacionBoton);
+
+    const dialogContent = document.getElementById("dialogContent");
+    const fileLabel = document.createElement("label");
+    fileLabel.textContent = "Imagenes publicaciones";
+    const fileInput = document.createElement("input");
+    fileInput.type = "file";
+    fileInput.name = "archivo"; 
+    fileInput.multiple = true;
+
+    dialogContent.insertBefore(fileLabel, dialogContent.lastChild.previousSibling);
+    dialogContent.insertBefore(fileInput, dialogContent.lastChild.previousSibling);
 }
 
-function agregarPublicacionBoton(id, publicacion){
-    fetch(`/publicaciones/create?nombre_publicacion=${publicacion[0]}&fk_emprendimiento=${publicacion[1]}&fecha_publicacion=${publicacion[2]}&fk_categoria=${publicacion[3]}&clicks=${publicacion[4]}&impresiones=${publicacion[5]}`, {
-        method: 'POST',
-    })
-    cargarPublicaciones();
-    closeDialog();
+async function agregarPublicacionBoton(id, publicacion){
+    const fileInput = document.getElementById("dialogContent").querySelector("input[type='file']");
+    const selectedFiles = fileInput.files; 
+
+    if (selectedFiles){
+        const formData = new FormData();
+        formData.append("nombre_publicacion", publicacion[0]);
+        formData.append("descripcion", publicacion[1]);
+        formData.append("fk_emprendimiento", publicacion[2]);
+        formData.append("fecha_publicacion", publicacion[3]);
+        formData.append("fk_categoria", publicacion[4]);
+        formData.append("clicks", publicacion[5]);
+        formData.append("impresiones", publicacion[6]);
+
+        for (let i = 0; i < selectedFiles.length; i++) {
+            formData.append("imagen", selectedFiles[i]);
+        }
+
+        const response = await fetch(`/publicaciones/create`, {
+            method: 'POST',
+            body : formData
+        })
+        if(response.ok){
+            cargarPublicaciones();
+            closeDialog();    
+        }
+        
+    }else{
+        alert("Tiene que ingresar por lo minimo una imagen");
+    }
+
+    
 }
 
-function confirmarModificacion(id, values) {
-    console.log(values);
-    fetch(`/publicaciones/modificar?nombre_publicacion=${values[0]}&fk_emprendimiento=${values[1]}&fecha_publicacion=${values[2]}&fk_categoria=${values[3]}&clicks=${values[4]}&impresiones=${values[5]}&id_publicacion=${id}`, {
-        method: 'PUT',
-    })
-    cargarPublicaciones();
-    closeDialog();
+async function confirmarModificacion(id, values) {
+    const fileInput = document.getElementById("dialogContent").querySelector("input[type='file']");
+    const selectedFiles = fileInput.files; 
+
+    if (selectedFiles){
+        const formData = new FormData();
+        for (let i = 0; i < selectedFiles.length; i++) {
+            formData.append("imagen", selectedFiles[i]);
+        }
+        const reponse = await fetch(`/publicaciones/modificar?nombre_publicacion=${values[0]}&descripcion=${values[1]}&fk_emprendimiento=${values[2]}&fecha_publicacion=${values[3]}&fk_categoria=${values[4]}&clicks=${values[5]}&impresiones=${values[6]}&id_publicacion=${id}`, {
+            method: 'PUT',
+            body : formData
+        })
+        if (reponse.ok){
+            cargarPublicaciones();
+            closeDialog();
+        }else{
+            alert("Hubo un error");
+        }
+        
+    }else{
+        const response = await fetch(`/publicaciones/modificar?nombre_publicacion=${values[0]}&descripcion=${values[1]}&fk_emprendimiento=${values[2]}&fecha_publicacion=${values[3]}&fk_categoria=${values[4]}&clicks=${values[5]}&impresiones=${values[6]}&id_publicacion=${id}`, {
+            method: 'PUT',
+        })
+        if (response.ok){
+            cargarPublicaciones();
+            closeDialog();
+        }else{
+            alert("Hubo un error");
+        }
+    }
+   
 }
 
 function modificarPublicacion(id, publicacion) {
     openDialog(id, "Modificar Publicacion", [
         { placeholder: "Nombre de publicacion", value: publicacion.nombre_publicacion },
+        { placeholder: "Descripcion", value: publicacion.descripcion },
         { placeholder: "Numero de emprendimiento", value: publicacion.fk_emprendimiento },
         { placeholder: "Fecha de publicacion", value: formatearFecha(publicacion.fecha_publicacion) },
         { placeholder: "Numero de categoria", value: publicacion.fk_categoria },
         { placeholder: "Clicks", value: publicacion.clicks },
         { placeholder: "Impresiones", value: publicacion.impresiones }
     ], confirmarModificacion);
+
+    const dialogContent = document.getElementById("dialogContent");
+    const fileLabel = document.createElement("label");
+    fileLabel.textContent = "Imagenes publicaciones";
+    const fileInput = document.createElement("input");
+    fileInput.type = "file";
+    fileInput.name = "archivo"; 
+    fileInput.multiple = true;
+
+    dialogContent.insertBefore(fileLabel, dialogContent.lastChild.previousSibling);
+    dialogContent.insertBefore(fileInput, dialogContent.lastChild.previousSibling);
 }
 
 function eliminarPublicacion(id) {
